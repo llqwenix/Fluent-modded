@@ -1,3 +1,9 @@
+<img src="Assets/logodark.png#gh-dark-mode-only" alt="fluent">
+<img src="Assets/logolight.png#gh-light-mode-only" alt="fluent">
+<img src="Assets/theme2.png" alt="fluent">
+<img src="Assets/Theme1.png" alt="fluent">
+
+
 # FluentModded
 
 A modified version of the [Fluent](https://github.com/dawid-scripts/Fluent) UI library for Roblox, extended with extra themes,multi-pack icon support, and quality-of-life improvements.
