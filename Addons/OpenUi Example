@@ -1,3 +1,7 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+
 local toggleGui = Instance.new("ScreenGui")
 toggleGui.Name            = "OpenUi"
 toggleGui.Parent          = LocalPlayer.PlayerGui
@@ -71,6 +75,82 @@ local function MakeDraggable(topbar, obj, locked)
     end
 
     local function ToggleLock()
+        local newState = not obj:GetAttribute("Locked")
+        obj:SetAttribute("Locked", newState)
+        Fluent:Notify({
+            Title    = newState and "Button Locked" or "Button Unlocked",
+            Content  = newState and "This button is now locked in place." or "This button can now be moved.",
+            Duration = 2,
+        })
+    end
+
+    topbar.InputBegan:Connect(function(input)
+        if input.UserInputType ~= Enum.UserInputType.MouseButton1
+        and input.UserInputType ~= Enum.UserInputType.Touch then return end
+        dragging  = not obj:GetAttribute("Locked")
+        holding   = true
+        dragStart = input.Position
+        startPos  = obj.Position
+        holdToken += 1
+        local token = holdToken
+        task.delay(holdTime, function()
+            if holding and token == holdToken then ToggleLock() end
+        end)
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                holding  = false
+            end
+        end)
+    end)
+
+    topbar.InputChanged:Connect(function(input)
+        if not dragStart then return end
+        if input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch then
+            if (input.Position - dragStart).Magnitude > moveCancelThreshold then
+                holding = false
+            end
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then Update(input) end
+    end)
+end
+
+MakeDraggable(mainBtn, mainBtn, false)
+
+local function playSound(soundId)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Parent  = game:GetService("SoundService")
+    sound:Play()
+    sound.Ended:Connect(function() sound:Destroy() end)
+end
+
+mainBtn.MouseButton1Click:Connect(function()
+    local sounds = { "7127123605", "137566474343039", "438666542" }
+    playSound(sounds[math.random(#sounds)])
+    Window:Minimize()
+
+    local function smoothSpeed(target, dur)
+        local start = rotSpeed
+        local steps = 30
+        for i = 1, steps do
+            rotSpeed = start + (target - start) * (i / steps)
+            task.wait(dur / steps)
+        end
+        rotSpeed = target
+    end
+
+    smoothSpeed(360, 0.4)
+    task.wait(0.5)
+    smoothSpeed(180, 0.4)
+    task.wait(0.3)
+    smoothSpeed(90, 0.4)
+end)    local function ToggleLock()
         local newState = not obj:GetAttribute("Locked")
         obj:SetAttribute("Locked", newState)
         Fluent:Notify({
