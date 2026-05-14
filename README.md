@@ -124,7 +124,7 @@ SaveManager:LoadAutoloadConfig()
 ### v1.3.1
 - Add language system (broken)
 - Add Disable BackgroundImages (fully working can be enabled or disabled in the Interface manager
--Add New Element `AddCode`, `AddImage`(not fully functional yet) , `AddVideo` (does not work ), `AddDivider`, `AddSpace`, `AddGroup` you can unlock it with NameSection:AddElementName
+- Add New Element `AddCode`, `AddImage`(not fully functional yet) , `AddVideo` (does not work ), `AddDivider`, `AddSpace`, `AddGroup` you can unlock it with NameSection:AddElementName
 
 - Fix Auto load on FBM
 - Fix Auto Load on Save manager
