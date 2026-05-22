@@ -1,1 +1,598 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentPro"))()
 
+local Players          = game:GetService("Players")
+local LocalPlayer      = Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+
+Fluent:RegisterCustomTheme("MyTheme", {
+    Accent=Color3.fromRGB(96,205,255), AcrylicMain=Color3.fromRGB(20,20,30), AcrylicBorder=Color3.fromRGB(50,50,70),
+    AcrylicGradient=ColorSequence.new(Color3.fromRGB(20,20,30),Color3.fromRGB(10,10,20)), AcrylicNoise=0.8,
+    TitleBarLine=Color3.fromRGB(50,50,70), Tab=Color3.fromRGB(30,30,45), Element=Color3.fromRGB(25,25,38),
+    ElementBorder=Color3.fromRGB(50,50,70), InElementBorder=Color3.fromRGB(60,60,85), ElementTransparency=0.85,
+    ToggleSlider=Color3.fromRGB(40,40,60), ToggleToggled=Color3.fromRGB(96,205,255), SliderRail=Color3.fromRGB(40,40,60),
+    DropdownFrame=Color3.fromRGB(20,20,32), DropdownHolder=Color3.fromRGB(15,15,25), DropdownBorder=Color3.fromRGB(50,50,70),
+    DropdownOption=Color3.fromRGB(28,28,42), Keybind=Color3.fromRGB(28,28,42), Input=Color3.fromRGB(18,18,28),
+    InputFocused=Color3.fromRGB(12,12,20), InputIndicator=Color3.fromRGB(60,60,90), Dialog=Color3.fromRGB(15,15,25),
+    DialogHolder=Color3.fromRGB(12,12,20), DialogHolderLine=Color3.fromRGB(40,40,60), DialogButton=Color3.fromRGB(22,22,35),
+    DialogButtonBorder=Color3.fromRGB(50,50,70), DialogBorder=Color3.fromRGB(50,50,70), DialogInput=Color3.fromRGB(18,18,28),
+    DialogInputLine=Color3.fromRGB(60,60,90), Text=Color3.fromRGB(240,240,255), SubText=Color3.fromRGB(140,140,175),
+    Hover=Color3.fromRGB(35,35,55), HoverChange=0.04, ShineEnabled=true, StrokeShine=false, StrokeDark=Color3.fromRGB(40,40,60),
+    ButtonGradient={
+        Background=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(20,20,40)),ColorSequenceKeypoint.new(1,Color3.fromRGB(10,10,25))}),
+        Stroke=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(60,180,255)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(96,205,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(60,180,255))}),
+    },
+})
+
+Fluent:RegisterCustomTheme("Crimson Light", {
+    Accent=Color3.fromRGB(255,50,90), AcrylicMain=Color3.fromRGB(15,4,8), AcrylicBorder=Color3.fromRGB(200,30,60),
+    AcrylicGradient=ColorSequence.new(Color3.fromRGB(15,4,8),Color3.fromRGB(50,5,15)), AcrylicNoise=0.75,
+    TitleBarLine=Color3.fromRGB(220,40,75), Tab=Color3.fromRGB(70,10,20), Element=Color3.fromRGB(60,8,16),
+    ElementBorder=Color3.fromRGB(200,30,60), InElementBorder=Color3.fromRGB(255,60,100), ElementTransparency=0.82,
+    ToggleSlider=Color3.fromRGB(255,50,90), ToggleToggled=Color3.fromRGB(30,5,10), SliderRail=Color3.fromRGB(200,30,60),
+    DropdownFrame=Color3.fromRGB(60,10,20), DropdownHolder=Color3.fromRGB(25,5,12), DropdownBorder=Color3.fromRGB(200,30,60),
+    DropdownOption=Color3.fromRGB(255,50,90), Keybind=Color3.fromRGB(150,20,45), Input=Color3.fromRGB(50,8,16),
+    InputFocused=Color3.fromRGB(35,6,14), InputIndicator=Color3.fromRGB(230,45,80), Dialog=Color3.fromRGB(22,5,11),
+    DialogHolder=Color3.fromRGB(14,3,7), DialogHolderLine=Color3.fromRGB(9,2,5), DialogButton=Color3.fromRGB(26,6,13),
+    DialogButtonBorder=Color3.fromRGB(215,35,70), DialogBorder=Color3.fromRGB(200,30,60), DialogInput=Color3.fromRGB(26,6,13),
+    DialogInputLine=Color3.fromRGB(230,45,80), Text=Color3.fromRGB(255,220,225), SubText=Color3.fromRGB(240,160,175),
+    Hover=Color3.fromRGB(150,20,45), HoverChange=0.06, ShineEnabled=true, StrokeShine=true, StrokeDark=Color3.fromRGB(130,15,35),
+    Shine={Speed=0.45,RotationSpeed=20,ColorSequence=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(140,10,30)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,50,90)),ColorSequenceKeypoint.new(1,Color3.fromRGB(140,10,30))})},
+    ButtonGradient={
+        Background=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(180,20,50)),ColorSequenceKeypoint.new(1,Color3.fromRGB(50,5,15))}),
+        Stroke=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,50,90)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,100,140)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,50,90))}),
+    },
+})
+
+local Window = Fluent:CreateWindow({
+    Title="BetterFluent", SubTitle="v1.3.0", TabWidth=145,
+    Size=UDim2.fromOffset(520,480), Acrylic=true, Theme="Midnight Blue",
+    MinimizeKey=Enum.KeyCode.LeftControl, Search=true,
+    UserInfoTop      = true,
+    UserInfoTitle    = "Welcome ",
+    UserInfoSubtitle = "Hello  ",
+    UserInfoColor    = Color3.fromRGB(180, 0, 255),
+})
+
+Fluent:SetErrorHandler(function(msg, fullErr)
+    pcall(function() Fluent:Notify({Title="Error", Content=tostring(msg), Type="Error", Duration=5}) end)
+end)
+
+local MainTab     = Window:AddTab({ Title="Main",     Icon="solar/home-bold"     })
+local AdvTab      = Window:AddTab({ Title="Advanced", Icon="solar/widget-bold"   })
+local MediaTab    = Window:AddTab({ Title="Media",    Icon="solar/gallery-bold"  })
+local NotifyTab   = Window:AddTab({ Title="Notify",   Icon="solar/bell-bold"     })
+local ThemesTab   = Window:AddTab({ Title="Themes",   Icon="solar/palette-bold"  })
+local SettingsTab = Window:AddTab({ Title="Settings", Icon="solar/settings-bold" })
+
+local secBasic = MainTab:AddSection("Basic Elements")
+
+secBasic:AddToggle("FeatureToggle", {
+    Title="Enable Feature", Icon="solar/shield-bold", Default=false,
+    Callback=function(v) Fluent:Notify({Title="Toggle", Content="Feature: "..tostring(v), Duration=2}) end,
+})
+secBasic:AddSlider("WalkSpeed", {
+    Title="Walk Speed", Icon="solar/running-bold", Min=1, Max=100, Default=16, Rounding=0,
+    Callback=function(v)
+        local lp = game:GetService("Players").LocalPlayer
+        if lp and lp.Character and lp.Character:FindFirstChild("Humanoid") then
+            lp.Character.Humanoid.WalkSpeed = v
+        end
+    end,
+})
+secBasic:AddInput("NameInput", {
+    Title="Player Tag", Icon="solar/user-bold", Placeholder="Enter name...", Default="",
+    Callback=function(v) Fluent:Notify({Title="Input", Content=tostring(v), Duration=2}) end,
+})
+secBasic:AddColorpicker("AuraColor", {
+    Title="Aura Color", Icon="solar/star-bold",
+    Default=Color3.fromRGB(96,205,255), Transparency=0,
+    Callback=function(c) Fluent:Notify({Title="Color", Content=tostring(c), Duration=2}) end,
+})
+secBasic:AddDivider()
+
+local secKeybinds = MainTab:AddSection("Keybinds")
+
+secKeybinds:AddKeybind("KeyToggle", {
+    Title="Keybind (Toggle)", Icon="solar/keyboard-bold", Default="RightAlt", Mode="Toggle",
+    Callback=function(state)
+        Fluent:Notify({Title="Keybind", Content="Toggle: "..tostring(state), Type=state and "Success" or "Info", Duration=2})
+    end,
+})
+secKeybinds:AddKeybind("KeyHold", {
+    Title="Keybind (Hold)", Icon="solar/hand-holding-bold", Default="RightShift", Mode="Hold",
+    Callback=function(held)
+        Fluent:Notify({Title="Keybind", Content=held and "Holding..." or "Released", Type=held and "Warning" or "Info", Duration=1})
+    end,
+})
+secKeybinds:AddDivider()
+
+local secActions = MainTab:AddSection("Actions")
+
+secActions:AddButton({
+    Title="Reset Values", Icon="solar/restart-bold",
+    Callback=function()
+        Fluent.Options.FeatureToggle:SetValue(false)
+        Fluent.Options.WalkSpeed:SetValue(16)
+        Fluent:Notify({Title="Reset", Content="Values reset.", Type="Info", Duration=3})
+    end,
+})
+secActions:AddParagraph({Title="About", Content="BetterFluent v1.3.0"})
+secActions:AddCode({
+    Title="Quick Start",
+    Code='local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentPro"))()\nlocal Win = Fluent:CreateWindow({ Title = "My Script" })',
+    OnCopy=function() Fluent:Notify({Title="Code", Content="Copied!", Duration=2}) end,
+})
+secActions:AddSpace({Height=6})
+
+local secDD = AdvTab:AddSection("Dropdowns")
+
+secDD:AddDropdown("DD1", {Title="Dropdown (search)",        Icon="solar/magnifer-bold", Values={"Apple","Banana","Cherry","Date","Elderberry"}, Default="Apple",                      Callback=function(v) Fluent:Notify({Title="DD1", Content=tostring(v), Duration=2}) end})
+secDD:AddDropdown("DD2", {Title="Dropdown (no search)",     Icon="solar/list-bold",     Values={"Red","Green","Blue","Yellow"},                 Default="Red",     NoSearch=true,      Callback=function(v) Fluent:Notify({Title="DD2", Content=tostring(v), Duration=2}) end})
+secDD:AddDropdown("DD3", {Title="Multi-Select (search)",    Icon="solar/layers-bold",   Values={"Option 1","Option 2","Option 3","Option 4"},   Default={"Option 1","Option 3"}, Multi=true, Callback=function(v) Fluent:Notify({Title="DD3", Content=tostring(v), Duration=2}) end})
+secDD:AddDropdown("DD4", {Title="Multi-Select (no search)", Icon="solar/layers-bold",   Values={"Alpha","Beta","Gamma","Delta"},                Default={"Alpha"}, Multi=true, NoSearch=true, Callback=function(v) Fluent:Notify({Title="DD4", Content=tostring(v), Duration=2}) end})
+secDD:AddDivider()
+
+local secGroup = AdvTab:AddSection("Group & Dialog")
+
+local grp  = secGroup:AddGroup({Columns=2, Gap=6})
+local colA = grp:AddElement()
+local colB = grp:AddElement()
+colA.Library = Fluent; colA.Type = "Section"; colA.ScrollFrame = AdvTab.ScrollFrame
+colB.Library = Fluent; colB.Type = "Section"; colB.ScrollFrame = AdvTab.ScrollFrame
+Fluent.Elements.AddButton(colA, {Title="Column A", Callback=function() Fluent:Notify({Title="Group", Content="Column A", Duration=2}) end})
+Fluent.Elements.AddButton(colB, {Title="Column B", Callback=function() Fluent:Notify({Title="Group", Content="Column B", Duration=2}) end})
+secGroup:AddDivider()
+
+secGroup:AddButton({
+    Title="Simple Dialog", Icon="solar/chat-round-bold",
+    Callback=function()
+        Window:Dialog({
+            Title="Dialog", Content="Two-button dialog.",
+            Buttons={
+                {Title="OK",     Callback=function() Fluent:Notify({Title="Dialog", Content="OK pressed.",  Type="Success", Duration=2}) end},
+                {Title="Cancel", Callback=function() Fluent:Notify({Title="Dialog", Content="Cancelled.",   Type="Info",    Duration=2}) end},
+            },
+        })
+    end,
+})
+secGroup:AddButton({
+    Title="Input Dialog", Icon="solar/pen-bold",
+    Callback=function()
+        Window:Dialog({
+            Title="Input", Content="Type something:", Input={Placeholder="Enter text..."},
+            Buttons={
+                {Title="Submit", Callback=function(v) Fluent:Notify({Title="Submitted", Content=tostring(v), Type="Success", Duration=3}) end},
+                {Title="Close"},
+            },
+        })
+    end,
+})
+
+local secImg = MediaTab:AddSection("Image Element")
+
+secImg:AddParagraph({Title="Images Note", Content="Supports rbxassetid:// and http Url Images."})
+secImg:AddImage({Image="rbxassetid://7733960981",                              AspectRatio="16:9", Radius=10})
+secImg:AddImage({Image="https://od.lk/d/NjNfOTg0NjQyNTRf/ft.png",            AspectRatio="16:9", Radius=8})
+secImg:AddImage({Image="https://od.lk/d/NjNfOTg0NzkzMzdf/YotsubaRt.png",     AspectRatio="16:9", Radius=10})
+secImg:AddDivider()
+
+local secVid = MediaTab:AddSection("Video Element")
+
+secVid:AddParagraph({Title="Video Note", Content="Supports rbxassetid:// only (RBX internal assets)."})
+secVid:AddVideo({Video="rbxassetid://5670802294", AspectRatio="16:9", Radius=8, AutoPlay=true, Looped=true, Volume=0})
+secVid:AddDivider()
+
+local secAudio = MediaTab:AddSection("Audio Element")
+
+secAudio:AddParagraph({Title="Audio Note", Content="Supports rbxassetid:// and http Url audio."})
+secAudio:AddAudio({Audio="rbxassetid://142376088", Volume=0.5, Looped=true, AutoPlay=false})
+secAudio:AddAudio({Audio="https://od.lk/d/NjNfODkwMDU1MDJf/hkmori%20-%20anybody%20can%20find%20love%20%28except%20you.%29%20%281%29.mp3", Volume=0.4, Looped=true, AutoPlay=false})
+secAudio:AddDivider()
+
+local secCode = MediaTab:AddSection("Code Element")
+
+secCode:AddCode({
+    Title="Code Example",
+    Code='local hs = game:GetService("HttpService")\nlocal data = hs:GetAsync("https://pornhub.com")\nprint(hi)',
+    OnCopy=function() Fluent:Notify({Title="Code", Content="Copied!", Duration=2}) end,
+})
+
+local secNotify = NotifyTab:AddSection("Standard Types")
+
+secNotify:AddButton({Title="Info",    Icon="solar/info-circle-bold",  Callback=function() Fluent:Notify({Title="Info",    Content="Informational.",     Type="Info",    Duration=4}) end})
+secNotify:AddButton({Title="Success", Icon="solar/check-circle-bold", Callback=function() Fluent:Notify({Title="Success", Content="Operation complete!", Type="Success", Duration=4}) end})
+secNotify:AddButton({
+    Title="With SubContent", Icon="solar/document-bold",
+    Callback=function() Fluent:Notify({Title="BetterFluent", Content="Main line", SubContent="Detail line here.", Type="Info", Duration=5}) end,
+})
+
+local secSmart = NotifyTab:AddSection("Smart Warning & Error")
+
+secSmart:AddParagraph({
+    Title="How it works",
+    Content="Warning/Error notifications parse the message for line numbers and known Lua errors, then append a helpful hint.",
+})
+secSmart:AddButton({Title="Warning plain",       Icon="solar/danger-triangle-bold", Callback=function() Fluent:Notify({Title="Warning",       Content="Proceed carefully.",                                Type="Warning", Duration=5}) end})
+secSmart:AddButton({Title="Warning with line",   Icon="solar/danger-triangle-bold", Callback=function() Fluent:Notify({Title="WalkSpeed",     Content="Value out of range", SubContent="Script:73: bad argument #1", Type="Warning", Duration=6}) end})
+secSmart:AddButton({Title="Error nil index",     Icon="solar/close-circle-bold",    Callback=function() Fluent:Notify({Title="Runtime Error", Content="Script:42: attempt to index nil with 'Value'",     Type="Error",   Duration=7}) end})
+secSmart:AddButton({Title="Error missing end",   Icon="solar/close-circle-bold",    Callback=function() Fluent:Notify({Title="Syntax Error",  Content="Script:88: 'end' expected (to close 'if' at line 85)", Type="Error", Duration=7}) end})
+secSmart:AddButton({Title="Error stack overflow",Icon="solar/close-circle-bold",    Callback=function() Fluent:Notify({Title="Stack Overflow",Content="Script:12: stack overflow",                         Type="Error",   Duration=7}) end})
+
+local secBuiltin = ThemesTab:AddSection("Built-in Themes")
+local secCustom  = ThemesTab:AddSection("Custom Themes")
+
+for _, name in ipairs({
+    "AMOLED","Ash Gray","Blood Red","Cyanic","Amber Glow","Deep Violet",
+    "Neon Cyber","Neon Purple","Royal Blue","Deep Ocean","RGB","Orange",
+    "Charcoal","Pearl White","Midnight Blue","Galaxy Purple","Cosmic Violet",
+    "Cotton Candy","Arctic Frost",
+}) do
+    local _n = name
+    secBuiltin:AddButton({Title=_n, Callback=function()
+        Fluent:SetTheme(_n)
+        Fluent:Notify({Title="Theme", Content=_n.." applied!", Type="Info", Duration=2})
+    end})
+end
+
+secCustom:AddButton({
+    Title="Apply MyTheme", Icon="solar/star-bold",
+    Callback=function()
+        Fluent:SetTheme("MyTheme")
+        getgenv().ButtonGradients = {
+            Background=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(20,20,40)),ColorSequenceKeypoint.new(1,Color3.fromRGB(10,10,25))}),
+            Stroke=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(60,180,255)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(96,205,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(60,180,255))}),
+        }
+        Fluent:Notify({Title="Theme", Content="MyTheme applied!", Type="Success", Duration=2})
+    end,
+})
+secCustom:AddButton({
+    Title="Apply Crimson Light", Icon="solar/fire-bold",
+    Callback=function()
+        Fluent:SetTheme("Crimson Light")
+        getgenv().ButtonGradients = {
+            Background=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(180,20,50)),ColorSequenceKeypoint.new(1,Color3.fromRGB(50,5,15))}),
+            Stroke=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,50,90)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,100,140)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,50,90))}),
+        }
+        Fluent:Notify({Title="Theme", Content="Crimson Light applied!", Type="Success", Duration=2})
+    end,
+})
+secCustom:AddParagraph({
+    Title="Custom Theme Info",
+    Content="Register via Fluent:RegisterCustomTheme(name, data).\nThe ButtonGradient field controls the floating button gradient colors.",
+})
+
+MediaManager:SetFolder("BetterFluent/MediaCache")
+
+InterfaceManager:SetLibrary(Fluent)
+InterfaceManager:SetFolder("BetterFluent")
+InterfaceManager:BuildInterfaceSection(SettingsTab)
+InterfaceManager:LoadSettings()
+
+SaveManager:SetLibrary(Fluent)
+SaveManager:SetFolder("BetterFluent/Config")
+SaveManager:IgnoreThemeSettings()
+SaveManager:BuildConfigSection(SettingsTab)
+SaveManager:LoadAutoloadConfig()
+
+FloatingButtonManager:SetLibrary(Fluent)
+FloatingButtonManager:SetFolder("BetterFluent/Floating")
+FloatingButtonManager:BuildConfigSection(SettingsTab)
+FloatingButtonManager:LoadAutoloadConfig()
+
+local function CreateButton(ButtonName, Name, Size1, Size2, ScriptLogic, CircleMode)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = ButtonName
+    screenGui.Parent = LocalPlayer.PlayerGui
+    screenGui.ResetOnSpawn = false
+    screenGui.DisplayOrder = -2147483648
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    screenGui.IgnoreGuiInset = false
+
+    local frame = Instance.new("Frame")
+    frame.Name = ButtonName
+    frame.Size = UDim2.new(Size1, 0, Size2, 0)
+    frame.Position = UDim2.new(0.5 - Size1 / 2, 0, 0.5 - Size2 / 2, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    frame.BackgroundTransparency = 0.7
+    frame.ZIndex = -10
+    frame.Parent = screenGui
+
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = getgenv().ButtonGradients.Background
+    gradient.Parent = frame
+    task.spawn(function()
+        while task.wait(0.03) do
+            if not frame.Parent then break end
+            gradient.Rotation = (gradient.Rotation + 1) % 360
+            gradient.Color = getgenv().ButtonGradients.Background
+        end
+    end)
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 2
+    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    stroke.Color = Color3.new(1, 1, 1)
+    stroke.Parent = frame
+    local gradientstroke = Instance.new("UIGradient")
+    gradientstroke.Color = getgenv().ButtonGradients.Stroke
+    gradientstroke.Rotation = 0
+    gradientstroke.Parent = stroke
+    task.spawn(function()
+        while frame.Parent do
+            gradientstroke.Rotation = (gradientstroke.Rotation + 0.5) % 360
+            gradientstroke.Color = getgenv().ButtonGradients.Stroke
+            task.wait()
+        end
+    end)
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 15)
+    corner.Parent = frame
+
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, 0, 1, 0)
+    button.BackgroundTransparency = 1
+    button.Text = Name
+    button.Font = Enum.Font.SourceSansBold
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 24
+    button.TextScaled = false
+    button.ZIndex = -9
+    button.Parent = frame
+
+    local toggle = Instance.new("TextButton")
+    toggle.Size = UDim2.new(0, 28, 0, 28)
+    toggle.Position = UDim2.new(1, 6, 0.5, -14)
+    toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    toggle.Text = "○"
+    toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggle.Visible = false
+    toggle.ZIndex = -8
+    toggle.Parent = frame
+    Instance.new("UICorner", toggle).CornerRadius = UDim.new(1, 0)
+
+    local originalSize = UDim2.new(Size1, 0, Size2, 0)
+    local holding, holdStart, hideAt = false, 0, 0
+
+    frame:SetAttribute("IsCircle", false)
+    local isCircle = CircleMode ~= nil and CircleMode or frame:GetAttribute("IsCircle")
+
+    local function applyShape(circle)
+        frame:SetAttribute("IsCircle", circle)
+        local s = math.min(frame.AbsoluteSize.X, frame.AbsoluteSize.Y)
+        if circle then
+            frame.Size = UDim2.new(0, s, 0, s)
+            button.TextWrapped = true
+            button.TextScaled = true
+            button.TextSize = math.floor(s * 0.45)
+            corner.CornerRadius = UDim.new(1, 0)
+            toggle.Text = "▢"
+        else
+            frame.Size = originalSize
+            button.TextWrapped = false
+            button.TextScaled = false
+            button.TextSize = 24
+            corner.CornerRadius = UDim.new(0, 15)
+            toggle.Text = "○"
+        end
+    end
+    applyShape(isCircle)
+
+    task.spawn(function()
+        while task.wait(0.25) do
+            if not frame.Parent then break end
+            if toggle.Visible and tick() - hideAt >= 10 then toggle.Visible = false end
+        end
+    end)
+
+    button.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+            holding = true; holdStart = tick()
+        end
+    end)
+    button.InputEnded:Connect(function(i)
+        if holding and (i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch) then
+            holding = false
+            if tick() - holdStart >= 0.6 then toggle.Visible = true; hideAt = tick() end
+        end
+    end)
+    toggle.MouseButton1Click:Connect(function()
+        hideAt = tick()
+        applyShape(not frame:GetAttribute("IsCircle"))
+    end)
+    button.Activated:Connect(function()
+        if ScriptLogic then ScriptLogic(button) end
+    end)
+
+    FloatingButtonManager:AddButton(ButtonName, frame, false)
+
+    local function MakeDraggable(topbarobject, object, locked)
+        local Dragging, DragInput, DragStart, StartPosition = false, nil, nil, nil
+        local Holding, HoldTime, MoveCancelThreshold, HoldToken = false, 1.0, 6, 0
+        object:SetAttribute("Locked", locked or false)
+        local function Update(input)
+            if object:GetAttribute("Locked") then return end
+            local delta = input.Position - DragStart
+            object.Position = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + delta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + delta.Y)
+        end
+        local function ToggleLock()
+            local newState = not object:GetAttribute("Locked")
+            object:SetAttribute("Locked", newState)
+            Fluent:Notify({ Title = newState and "Button Locked" or "Button Unlocked", Content = newState and "Locked in place." or "Can now be moved.", Duration = 2 })
+        end
+        topbarobject.InputBegan:Connect(function(input)
+            if input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch then return end
+            Dragging = not object:GetAttribute("Locked"); Holding = true; DragStart = input.Position; StartPosition = object.Position
+            HoldToken += 1; local token = HoldToken
+            task.delay(HoldTime, function() if Holding and token == HoldToken then ToggleLock() end end)
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then Dragging = false; Holding = false end
+            end)
+        end)
+        topbarobject.InputChanged:Connect(function(input)
+            if not DragStart then return end
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                if (input.Position - DragStart).Magnitude > MoveCancelThreshold then Holding = false end
+                DragInput = input
+            end
+        end)
+        UserInputService.InputChanged:Connect(function(input) if input == DragInput and Dragging then Update(input) end end)
+    end
+    MakeDraggable(button, frame, false)
+
+    return button
+end
+
+local _uiOpen = true
+CreateButton("BF_OpenUI", "Open UI", 0.12, 0.065,
+    function()
+        _uiOpen = not _uiOpen
+        if _uiOpen then Window:Show() else Window:Hide() end
+        Fluent:Notify({Title="BetterFluent", Content=_uiOpen and "UI opened" or "UI hidden", Type="Info", Duration=1})
+    end,
+    false
+)
+
+CreateButton("BF_HUD", "HUD", 0.09, 0.09,
+    function()
+        Fluent:Notify({Title="HUD", Content="Circle HUD pressed!", Type="Info", Duration=2})
+    end,
+    true
+)
+
+local _featOn = false
+CreateButton("BF_Feature", "OFF", 0.13, 0.065,
+    function(btn)
+        _featOn = not _featOn
+        btn.Text = _featOn and "ON" or "OFF"
+        Fluent:Notify({Title="Feature", Content=_featOn and "Enabled" or "Disabled", Type=_featOn and "Success" or "Warning", Duration=2})
+    end,
+    false
+)
+
+local toggleGui = Instance.new("ScreenGui")
+toggleGui.Name = "OpenUi"
+toggleGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+toggleGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+toggleGui.ResetOnSpawn = false
+
+local mainBtn = Instance.new("TextButton")
+mainBtn.Name = "OpenButton"
+mainBtn.Parent = toggleGui
+mainBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainBtn.BackgroundTransparency = 1
+mainBtn.Position = UDim2.new(0.101969875, 0, 0.110441767, 0)
+mainBtn.Size = UDim2.new(0, 64, 0, 42)
+mainBtn.Text = ""
+mainBtn.Visible = true
+Instance.new("UICorner", mainBtn)
+
+local SizeBackMulti = 0.3
+
+local backgroundImage = Instance.new("ImageLabel")
+backgroundImage.Name = "RotatingBackground"
+backgroundImage.Parent = mainBtn
+backgroundImage.Size = UDim2.new(1.5 + SizeBackMulti, 0, 1.5 + SizeBackMulti, 0)
+backgroundImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+backgroundImage.AnchorPoint = Vector2.new(0.5, 0.5)
+backgroundImage.BackgroundTransparency = 1
+backgroundImage.Image = "rbxassetid://92062295706713"
+backgroundImage.SizeConstraint = Enum.SizeConstraint.RelativeXX
+backgroundImage.ZIndex = 0
+
+local frontImage = Instance.new("ImageLabel")
+frontImage.Name = "StaticIcon"
+frontImage.Parent = mainBtn
+frontImage.Size = UDim2.fromOffset(55, 55)
+frontImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+frontImage.AnchorPoint = Vector2.new(0.5, 0.5)
+frontImage.BackgroundTransparency = 1
+frontImage.Image = "rbxassetid://126113649238951"
+frontImage.ZIndex = 1
+Instance.new("UICorner", frontImage).CornerRadius = UDim.new(0.2, 0)
+
+local rotation = 0
+local rotSpeed = 90
+local lastTime = tick()
+
+task.spawn(function()
+    while true do
+        local now = tick()
+        local delta = now - lastTime
+        lastTime = now
+        rotation = (rotation + rotSpeed * delta) % 360
+        backgroundImage.Rotation = rotation
+        task.wait()
+    end
+end)
+
+local function MakeDraggableOpenUi(topbar, obj)
+    local dragging, dragInput, dragStart, startPos = false, nil, nil, nil
+    local holdingDrag, holdToken = false, 0
+    obj:SetAttribute("Locked", false)
+    local function Update(input)
+        if obj:GetAttribute("Locked") then return end
+        local delta = input.Position - dragStart
+        obj.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+    local function ToggleLock()
+        local newState = not obj:GetAttribute("Locked")
+        obj:SetAttribute("Locked", newState)
+        Fluent:Notify({Title=newState and "Button Locked" or "Button Unlocked", Content=newState and "Locked in place." or "Can now be moved.", Duration=2})
+    end
+    topbar.InputBegan:Connect(function(input)
+        if input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch then return end
+        dragging = not obj:GetAttribute("Locked")
+        holdingDrag = true; dragStart = input.Position; startPos = obj.Position
+        holdToken += 1; local token = holdToken
+        task.delay(1.0, function() if holdingDrag and token == holdToken then ToggleLock() end end)
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then dragging = false; holdingDrag = false end
+        end)
+    end)
+    topbar.InputChanged:Connect(function(input)
+        if not dragStart then return end
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if (input.Position - dragStart).Magnitude > 6 then holdingDrag = false end
+            dragInput = input
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then Update(input) end
+    end)
+end
+
+MakeDraggableOpenUi(mainBtn, mainBtn)
+
+local function playSound(soundId)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Parent = game:GetService("SoundService")
+    sound:Play()
+    sound.Ended:Connect(function() sound:Destroy() end)
+end
+
+mainBtn.MouseButton1Click:Connect(function()
+    local sounds = {"7127123605", "137566474343039", "438666542"}
+    playSound(sounds[math.random(#sounds)])
+    Window:Minimize()
+    local function smoothSpeed(target, dur)
+        local start = rotSpeed
+        local steps = 30
+        for i = 1, steps do
+            rotSpeed = start + (target - start) * (i / steps)
+            task.wait(dur / steps)
+        end
+        rotSpeed = target
+    end
+    smoothSpeed(360, 0.4)
+    task.wait(0.5)
+    smoothSpeed(180, 0.4)
+    task.wait(0.3)
+    smoothSpeed(90, 0.4)
+end)
+
+FloatingButtonManager:AddButton("OpenUiBtn", mainBtn, false, false)
+
+Fluent:Notify({Title="BetterFluent", Content="Loaded successfully!", Type="Success", Duration=4})
+Window:SelectTab(1)
