@@ -1,4 +1,4 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentPro"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentProTest"))()
 
 local Players          = game:GetService("Players")
 local LocalPlayer      = Players.LocalPlayer
@@ -41,6 +41,8 @@ Fluent:RegisterCustomTheme("Crimson Light", {
         Background=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(180,20,50)),ColorSequenceKeypoint.new(1,Color3.fromRGB(50,5,15))}),
         Stroke=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,50,90)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(255,100,140)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,50,90))}),
     },
+    Background = "rbxassetid://136310484943077",
+    BackgroundTransparency = 0.15,
 })
 
 local Window = Fluent:CreateWindow({
@@ -179,14 +181,30 @@ secImg:AddDivider()
 local secVid = MediaTab:AddSection("Video Element")
 
 secVid:AddParagraph({Title="Video Note", Content="Supports rbxassetid:// only (RBX internal assets)."})
-secVid:AddVideo({Video="rbxassetid://5670802294", AspectRatio="16:9", Radius=8, AutoPlay=true, Looped=true, Volume=0})
+secVid:AddVideo({Video="rbxassetid://5670802294", AspectRatio="16:9", Radius=8, AutoPlay=false, Looped=true, Volume=0.5})
 secVid:AddDivider()
 
 local secAudio = MediaTab:AddSection("Audio Element")
 
 secAudio:AddParagraph({Title="Audio Note", Content="Supports rbxassetid:// and http Url audio."})
-secAudio:AddAudio({Audio="rbxassetid://142376088", Volume=0.5, Looped=true, AutoPlay=false})
-secAudio:AddAudio({Audio="https://od.lk/d/NjNfODkwMDU1MDJf/hkmori%20-%20anybody%20can%20find%20love%20%28except%20you.%29%20%281%29.mp3", Volume=0.4, Looped=true, AutoPlay=false})
+secAudio:AddAudio({
+    Audio="rbxassetid://142376088",
+    Volume=0.5,
+    Looped=true,
+    AutoPlay=false,
+    AudioTitle="Roblox Classic BGM",
+    AudioSubtitle="By Roblox",
+    PlayOutsideWindow=false,
+})
+secAudio:AddAudio({
+    Audio="https://od.lk/d/NjNfODkwMDU1MDJf/hkmori%20-%20anybody%20can%20find%20love%20%28except%20you.%29%20%281%29.mp3",
+    Volume=0.4,
+    Looped=true,
+    AutoPlay=false,
+    AudioTitle="Anybody Can Find Love (Except You)",
+    AudioSubtitle="By hkmori",
+    PlayOutsideWindow=true,
+})
 secAudio:AddDivider()
 
 local secCode = MediaTab:AddSection("Code Element")
