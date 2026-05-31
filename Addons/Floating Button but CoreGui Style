@@ -188,6 +188,4 @@ local function CreateButton(ButtonName, Name, Size1, Size2, ScriptLogic, CircleM
     return button
 end
 
-CreateButton("", "", 0.16, 0.12, nil, false)
-CreateButton("", "", 0.2, 0.1, nil, false)
-CreateButton("", "", 0.2, 0.2, nil, false)
+CreateButton("Text", "Text", 0.16, 0.12, nil, false)
