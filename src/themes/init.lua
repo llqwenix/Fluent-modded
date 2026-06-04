@@ -2,7 +2,7 @@ local Themes = {
 	Names = {
 		"AshGray",
 		"Charcoal",
-		"PearlLight",
+		"PearlWhite",
 		"Aqua",
 		"DeepViolet",
 		"BloodRed",
