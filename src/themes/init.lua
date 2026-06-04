@@ -1,11 +1,11 @@
 local Themes = {
 	Names = {
-		"Dark",
-		"Darker",
-		"Light",
+		"AshGray",
+		"Charcoal",
+		"PearlLight",
 		"Aqua",
-		"Amethyst",
-		"Rose",
+		"DeepViolet",
+		"BloodRed",
 	},
 }
 
