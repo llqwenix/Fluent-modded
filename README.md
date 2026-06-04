@@ -1,5 +1,5 @@
 <img src="Assets/asset.png#gh-dark-mode-only" alt="fluent">
-<img src="Assets/logolight.png#gh-light-mode-only" alt="fluent">
+<img src="Assets/asset.png#gh-light-mode-only" alt="fluent">
 <img src="Assets/Theme 2.png" alt="fluent">
 <img src="Assets/Theme1.png" alt="fluent">
 
