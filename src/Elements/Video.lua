@@ -75,9 +75,9 @@ function Video:New(_, config)
 			return btn
 		end
 
-		local playBtn  = ctrlBtn("▶ Play",  function() vid:Play()  end)
-		local pauseBtn = ctrlBtn("⏸ Pause", function() vid:Pause() end)
-		local stopBtn  = ctrlBtn("⏹ Stop",  function() vid:Stop()  end)
+		local playBtn  = ctrlBtn(" Play",  function() vid:Play()  end)
+		local pauseBtn = ctrlBtn(" Pause", function() vid:Pause() end)
+		local stopBtn  = ctrlBtn(" Stop",  function() vid:Stop()  end)
 
 		if auto and resolved ~= "" then
 			task.spawn(function()
