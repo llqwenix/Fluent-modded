@@ -1,157 +1,104 @@
-local Root = script.Parent.Parent
-local Assets = require(script.Parent.Assets)
+local Root    = script.Parent.Parent
 local Creator = require(Root.Creator)
-local Flipper = require(Root.Packages.Flipper)
+local Assets  = require(Root.Components.Assets)
+local New     = Creator.New
 
-local New = Creator.New
-local AddSignal = Creator.AddSignal
+return function(config)
+	local tb = {}
+	config = config or {}
 
-return function(Config)
-	local TitleBar = {}
-
-	local Library = require(Root)
-
-	local function BarButton(Icon, Pos, Parent, Callback)
-		local Button = {
-			Callback = Callback or function() end,
-		}
-
-		Button.Frame = New("TextButton", {
-			Size = UDim2.new(0, 34, 1, -8),
-			AnchorPoint = Vector2.new(1, 0),
-			BackgroundTransparency = 1,
-			Parent = Parent,
-			Position = Pos,
-			Text = "",
-			ThemeTag = {
-				BackgroundColor3 = "Text",
-			},
+	local function iconBtn(image, size)
+		local btn = New("TextButton", {
+			Size                 = UDim2.fromOffset(size or 28, size or 28),
+			BackgroundTransparency = 0.85,
+			Text                 = "",
+			ThemeTag             = { BackgroundColor3 = "Tab" },
 		}, {
-			New("UICorner", {
-				CornerRadius = UDim.new(0, 7),
-			}),
+			New("UICorner", { CornerRadius = UDim.new(0, 5) }),
+			New("UIStroke", { Transparency = 0.5, Thickness = 1, ThemeTag = { Color = "InElementBorder" } }),
 			New("ImageLabel", {
-				Image = Icon,
-				Size = UDim2.fromOffset(16, 16),
-				Position = UDim2.fromScale(0.5, 0.5),
-				AnchorPoint = Vector2.new(0.5, 0.5),
+				Name            = "Icon",
+				Size            = UDim2.fromOffset(14, 14),
+				Position        = UDim2.fromScale(0.5, 0.5),
+				AnchorPoint     = Vector2.new(0.5, 0.5),
 				BackgroundTransparency = 1,
-				Name = "Icon",
-				ThemeTag = {
-					ImageColor3 = "Text",
-				},
+				Image           = image,
+				ThemeTag        = { ImageColor3 = "SubText" },
 			}),
 		})
-
-		local Motor, SetTransparency = Creator.SpringMotor(1, Button.Frame, "BackgroundTransparency")
-
-		AddSignal(Button.Frame.MouseEnter, function()
-			SetTransparency(0.94)
-		end)
-		AddSignal(Button.Frame.MouseLeave, function()
-			SetTransparency(1, true)
-		end)
-		AddSignal(Button.Frame.MouseButton1Down, function()
-			SetTransparency(0.96)
-		end)
-		AddSignal(Button.Frame.MouseButton1Up, function()
-			SetTransparency(0.94)
-		end)
-		AddSignal(Button.Frame.MouseButton1Click, Button.Callback)
-
-		Button.SetCallback = function(Func)
-			Button.Callback = Func
-		end
-
-		return Button
+		return btn
 	end
 
-	TitleBar.Frame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 42),
-		BackgroundTransparency = 1,
-		Parent = Config.Parent,
+	tb.MinButton  = iconBtn(Assets.Min)
+	tb.MaxButton  = iconBtn(Assets.Max)
+	tb.CloseButton = New("TextButton", {
+		Size                 = UDim2.fromOffset(28, 28),
+		BackgroundColor3     = Color3.fromRGB(200, 50, 50),
+		BackgroundTransparency = 0.4,
+		Text                 = "",
 	}, {
-		New("Frame", {
-			Size = UDim2.new(1, -16, 1, 0),
-			Position = UDim2.new(0, 16, 0, 0),
+		New("UICorner", { CornerRadius = UDim.new(0, 5) }),
+		New("ImageLabel", {
+			Name            = "Icon",
+			Size            = UDim2.fromOffset(14, 14),
+			Position        = UDim2.fromScale(0.5, 0.5),
+			AnchorPoint     = Vector2.new(0.5, 0.5),
 			BackgroundTransparency = 1,
-		}, {
-			New("UIListLayout", {
-				Padding = UDim.new(0, 5),
-				FillDirection = Enum.FillDirection.Horizontal,
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			}),
-			New("TextLabel", {
-				RichText = true,
-				Text = Config.Title,
-				FontFace = Font.new(
-					"rbxasset://fonts/families/GothamSSm.json",
-					Enum.FontWeight.Regular,
-					Enum.FontStyle.Normal
-				),
-				TextSize = 12,
-				TextXAlignment = "Left",
-				TextYAlignment = "Center",
-				Size = UDim2.fromScale(0, 1),
-				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundTransparency = 1,
-				ThemeTag = {
-					TextColor3 = "Text",
-				},
-			}),
-			New("TextLabel", {
-				RichText = true,
-				Text = Config.SubTitle,
-				TextTransparency = 0.4,
-				FontFace = Font.new(
-					"rbxasset://fonts/families/GothamSSm.json",
-					Enum.FontWeight.Regular,
-					Enum.FontStyle.Normal
-				),
-				TextSize = 12,
-				TextXAlignment = "Left",
-				TextYAlignment = "Center",
-				Size = UDim2.fromScale(0, 1),
-				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundTransparency = 1,
-				ThemeTag = {
-					TextColor3 = "Text",
-				},
-			}),
-		}),
-		New("Frame", {
-			BackgroundTransparency = 0.5,
-			Size = UDim2.new(1, 0, 0, 1),
-			Position = UDim2.new(0, 0, 1, 0),
-			ThemeTag = {
-				BackgroundColor3 = "TitleBarLine",
-			},
+			Image           = Assets.Close,
+			ThemeTag        = { ImageColor3 = "Text" },
 		}),
 	})
 
-	TitleBar.CloseButton = BarButton(Assets.Close, UDim2.new(1, -4, 0, 4), TitleBar.Frame, function()
-		Library.Window:Dialog({
-			Title = "Close",
-			Content = "Are you sure you want to unload the interface?",
-			Buttons = {
-				{
-					Title = "Yes",
-					Callback = function()
-						Library:Destroy()
-					end,
-				},
-				{
-					Title = "No",
-				},
-			},
-		})
-	end)
-	TitleBar.MaxButton = BarButton(Assets.Max, UDim2.new(1, -40, 0, 4), TitleBar.Frame, function()
-		Config.Window.Maximize(not Config.Window.Maximized)
-	end)
-	TitleBar.MinButton = BarButton(Assets.Min, UDim2.new(1, -80, 0, 4), TitleBar.Frame, function()
-		Library.Window:Minimize()
-	end)
+	tb.Frame = New("Frame", {
+		Size                 = UDim2.new(1, 0, 0, 44),
+		BackgroundTransparency = 1,
+		Parent               = config.Parent,
+	}, {
+		New("TextLabel", {
+			FontFace         = Font.new("rbxassetid://12187365364", Enum.FontWeight.Bold),
+			Text             = config.Title or "",
+			TextSize         = 18,
+			TextXAlignment   = Enum.TextXAlignment.Left,
+			Size             = UDim2.new(1, -100, 0, 22),
+			Position         = UDim2.fromOffset(14, 10),
+			BackgroundTransparency = 1,
+			ThemeTag         = { TextColor3 = "Text" },
+		}),
+		New("TextLabel", {
+			FontFace         = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+			Text             = config.SubTitle or "",
+			TextSize         = 11,
+			TextXAlignment   = Enum.TextXAlignment.Left,
+			Size             = UDim2.new(1, -100, 0, 14),
+			Position         = UDim2.fromOffset(14, 28),
+			BackgroundTransparency = 1,
+			ThemeTag         = { TextColor3 = "SubText" },
+		}),
+		New("Frame", {
+			Size             = UDim2.new(0, 0, 0, 1),
+			AnchorPoint      = Vector2.new(0, 1),
+			Position         = UDim2.fromScale(0, 1),
+			BackgroundTransparency = 0,
+			ThemeTag         = { BackgroundColor3 = "TitleBarLine" },
+		}),
+		New("Frame", {
+			Size             = UDim2.new(0, 0, 1, -10),
+			AnchorPoint      = Vector2.new(1, 0.5),
+			Position         = UDim2.new(1, -10, 0.5, 0),
+			BackgroundTransparency = 1,
+		}, {
+			New("UIListLayout", {
+				FillDirection       = Enum.FillDirection.Horizontal,
+				VerticalAlignment   = Enum.VerticalAlignment.Center,
+				HorizontalAlignment = Enum.HorizontalAlignment.Right,
+				Padding             = UDim.new(0, 4),
+				SortOrder           = Enum.SortOrder.LayoutOrder,
+			}),
+			tb.MinButton,
+			tb.MaxButton,
+			tb.CloseButton,
+		}),
+	})
 
-	return TitleBar
+	return tb
 end

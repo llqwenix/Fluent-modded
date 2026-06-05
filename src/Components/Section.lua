@@ -1,49 +1,78 @@
-local Root = script.Parent.Parent
+local Root    = script.Parent.Parent
 local Creator = require(Root.Creator)
+local New     = Creator.New
 
-local New = Creator.New
+-- AddSection(title, iconKey, container)  —  iconKey is optional
+return function(title, iconKey, container)
+	if type(iconKey) ~= "string" then
+		-- called as (title, container)  →  shift args
+		container = iconKey
+		iconKey   = nil
+	end
 
-return function(Title, Parent)
-	local Section = {}
-
-	Section.Layout = New("UIListLayout", {
-		Padding = UDim.new(0, 5),
+	local m = {}
+	m.Layout = New("UIListLayout", {
+		Padding     = UDim.new(0, 5),
+		SortOrder   = Enum.SortOrder.LayoutOrder,
 	})
-
-	Section.Container = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 26),
-		Position = UDim2.fromOffset(0, 24),
+	m.Container = New("Frame", {
+		Size                  = UDim2.new(1, 0, 0, 26),
+		Position              = UDim2.fromOffset(0, 24),
 		BackgroundTransparency = 1,
-	}, {
-		Section.Layout,
-	})
+	}, { m.Layout })
 
-	Section.Root = New("Frame", {
+	local headerChildren = {}
+
+	-- icon
+	if iconKey then
+		local lib = require(Root)
+		local ic  = lib and lib:GetIcon(iconKey)
+		if ic then
+			local ico = New("ImageLabel", {
+				Size                  = UDim2.fromOffset(16, 16),
+				AnchorPoint           = Vector2.new(0, 0.5),
+				Position              = UDim2.fromOffset(0, 11),
+				BackgroundTransparency = 1,
+				ThemeTag              = { ImageColor3 = "SubText" },
+			})
+			if type(ic) == "table" then
+				ico.Image           = ic.Image           or ""
+				ico.ImageRectOffset = ic.ImageRectOffset or Vector2.new()
+				ico.ImageRectSize   = ic.ImageRectSize   or Vector2.new()
+			else
+				ico.Image = tostring(ic)
+			end
+			table.insert(headerChildren, ico)
+		end
+	end
+
+	local titleOffset = iconKey and 22 or 0
+	local titleLabel  = New("TextLabel", {
+		RichText       = true,
+		Text           = title or "",
+		FontFace       = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
+		TextSize       = 18,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		TextYAlignment = Enum.TextYAlignment.Center,
+		Size           = UDim2.new(1, -(16 + titleOffset), 0, 18),
+		Position       = UDim2.fromOffset(titleOffset, 2),
 		BackgroundTransparency = 1,
-		Size = UDim2.new(1, 0, 0, 26),
-		LayoutOrder = 7,
-		Parent = Parent,
-	}, {
-		New("TextLabel", {
-			RichText = true,
-			Text = Title,
-			TextTransparency = 0,
-			FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-			TextSize = 18,
-			TextXAlignment = "Left",
-			TextYAlignment = "Center",
-			Size = UDim2.new(1, -16, 0, 18),
-			Position = UDim2.fromOffset(0, 2),
-			ThemeTag = {
-				TextColor3 = "Text",
-			},
-		}),
-		Section.Container,
+		ThemeTag       = { TextColor3 = "Text" },
 	})
+	table.insert(headerChildren, titleLabel)
+	table.insert(headerChildren, m.Container)
 
-	Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-		Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-		Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+	m.Root = New("Frame", {
+		BackgroundTransparency = 1,
+		Size                   = UDim2.new(1, 0, 0, 26),
+		LayoutOrder            = 7,
+		Parent                 = container,
+	}, headerChildren)
+
+	Creator.AddSignal(m.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+		m.Container.Size = UDim2.new(1, 0, 0, m.Layout.AbsoluteContentSize.Y)
+		m.Root.Size      = UDim2.new(1, 0, 0, m.Layout.AbsoluteContentSize.Y + 25)
 	end)
-	return Section
+
+	return m
 end
