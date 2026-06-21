@@ -231,6 +231,15 @@ Fluent:RegisterCustomTheme("NeonBlue", {
     Hover = Color3.fromRGB(20, 36, 80),
     HoverChange = 0.05,
     ShineEnabled = true,
+    Shine = {
+        Speed = 0.5,
+        RotationSpeed = 25,
+        ColorSequence = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 60, 130)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 180, 255)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 60, 130)),
+        }),
+    },
     StrokeShine = true,
     StrokeDark = Color3.fromRGB(0, 60, 130),
     ButtonGradient = {
@@ -282,6 +291,15 @@ Fluent:RegisterCustomTheme("EmeraldDark", {
     Hover = Color3.fromRGB(14, 42, 26),
     HoverChange = 0.05,
     ShineEnabled = true,
+    Shine = {
+        Speed = 0.5,
+        RotationSpeed = 25,
+        ColorSequence = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 80, 40)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 220, 120)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 80, 40)),
+        }),
+    },
     StrokeShine = false,
     StrokeDark = Color3.fromRGB(0, 80, 40),
     ButtonGradient = {
@@ -333,6 +351,15 @@ Fluent:RegisterCustomTheme("Sunset", {
     Hover = Color3.fromRGB(56, 34, 24),
     HoverChange = 0.05,
     ShineEnabled = true,
+    Shine = {
+        Speed = 0.5,
+        RotationSpeed = 25,
+        ColorSequence = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 50, 15)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 150, 80)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 50, 15)),
+        }),
+    },
     StrokeShine = true,
     StrokeDark = Color3.fromRGB(120, 50, 15),
     ButtonGradient = {
@@ -432,6 +459,15 @@ Fluent:RegisterCustomTheme("SlateAnimated", {
     Hover = Color3.fromRGB(34, 37, 42),
     HoverChange = 0.04,
     ShineEnabled = true,
+    Shine = {
+        Speed = 0.5,
+        RotationSpeed = 25,
+        ColorSequence = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 54, 62)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(140, 150, 165)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 54, 62)),
+        }),
+    },
     StrokeShine = true,
     StrokeDark = Color3.fromRGB(50, 54, 62),
     ButtonGradient = {
