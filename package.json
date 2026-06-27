@@ -1,7 +1,7 @@
 {
-  "name": "fluentlibrary",
-  "version": "1.0.0",
-  "description": "",
+  "name": "FluentProlibrary",
+  "version": "1.4.1",
+  "description": "modded Versions of fluent Library and Fluent plus with more features",
   "main": "init.lua",
   "scripts": {
     "rojo": "mkdirp dist && rojo build -o dist/main.rbxm",
