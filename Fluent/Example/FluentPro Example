@@ -1,4 +1,4 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentPro"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-modded/releases/download/1.4.6/FluentPro"))()
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -12,7 +12,7 @@ local function Notify(title, content, ntype, icon, duration)
     Fluent:Notify({Title=title, Content=content, Type=ntype or "Info", Icon=icon, Duration=duration or 3})
 end
 
-local function CreateButton(buttonName, name, size1, size2, scriptLogic, circleMode)
+local function CreateButton(ButtonName, Name, Size1, Size2, ScriptLogic, CircleMode)
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = ButtonName
     screenGui.Parent = LocalPlayer.PlayerGui
@@ -90,7 +90,7 @@ local function CreateButton(buttonName, name, size1, size2, scriptLogic, circleM
     frame:SetAttribute("IsCircle", false)
     local isCircle = CircleMode ~= nil and CircleMode or frame:GetAttribute("IsCircle")
 
-    local function applyShape(circle)
+    local function ApplyShape(circle)
         frame:SetAttribute("IsCircle", circle)
         local s = math.min(frame.AbsoluteSize.X, frame.AbsoluteSize.Y)
         if circle then
@@ -109,7 +109,7 @@ local function CreateButton(buttonName, name, size1, size2, scriptLogic, circleM
             toggle.Text = "○"
         end
     end
-    applyShape(isCircle)
+    ApplyShape(isCircle)
 
     task.spawn(function()
         while task.wait(0.25) do
@@ -131,7 +131,7 @@ local function CreateButton(buttonName, name, size1, size2, scriptLogic, circleM
     end)
     toggle.MouseButton1Click:Connect(function()
         hideAt = tick()
-        applyShape(not frame:GetAttribute("IsCircle"))
+        ApplyShape(not frame:GetAttribute("IsCircle"))
     end)
     button.Activated:Connect(function()
         if ScriptLogic then ScriptLogic(button) end
@@ -468,7 +468,8 @@ Fluent:RegisterCustomTheme("SlateAnimated", {
 
 local Window = Fluent:CreateWindow({
     Title = "FluentPro",
-    SubTitle = "Full Showcase",
+    SubTitle = "Full docs",
+    Version = "Beta 1.4.6",
     TabWidth = 130,
     Size = UDim2.fromOffset(480, 460),
     Acrylic = true,
@@ -476,7 +477,6 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.LeftControl,
     Search = true,
     Icons = "solar/planet-bold",
-    TitleIcon = "solar/planet-bold",
     UserInfoTop = true,
     UserInfoTitle = "Welcome",
     UserInfoSubtitle = LocalPlayer.DisplayName,
@@ -495,13 +495,19 @@ Tabs = {
     Icons = Window:AddTab({ Title = "Icons", Icon = "solar/star-bold" }),
     Floating = Window:AddTab({ Title = "Floating", Icon = "solar/widget-2-bold" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "solar/settings-bold" }),
-    EmptyTab1 = Window:AddTab({ Title = "Empty Tab 1", Icon = "solar/home-bold" }),
     EmptyTab2 = Window:AddTab({ Title = "Empty Tab 2", Icon = "solar/star-bold" }),
     EmptyTab3 = Window:AddTab({ Title = "Empty Tab 3", Icon = "solar/settings-bold" }),
     EmptyTab4 = Window:AddTab({ Title = "Empty Tab 4", Icon = "solar/widget-bold" }),
     EmptyTab5 = Window:AddTab({ Title = "Empty Tab 5", Icon = "solar/layers-bold" }),
     EmptyTab6 = Window:AddTab({ Title = "Empty Tab 6", Icon = "solar/server-bold" }),
 }
+
+local secChangelog = Tabs.Elements:AddSection("Changelog", "solar/history-bold")
+
+secChangelog:AddParagraph({
+    Title = "Latest Update",
+    Content = "Fix Layout Order Glitch\nAdd Social Element\nAdd 2 New Theme\nRemove Device detector\nAdd Rich Text System\nBring Back Gold Theme\nSmall Bug Fix",
+})
 
 local secToggle = Tabs.Elements:AddSection("Toggle", "solar/toggle-on-circle-bold")
 
@@ -822,7 +828,7 @@ local secCode = Tabs.Elements:AddSection("Code", "solar/code-bold")
 
 secCode:AddCode({
     Title = "Load FluentPro",
-    Code = 'local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Beta/FluentPro"))()',
+    Code = 'local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-modded/releases/download/1.4.6/FluentPro"))()',
     OnCopy = function() Notify("Code", "Copied", "Info", nil, 2) end,
 })
 
@@ -1001,6 +1007,26 @@ secDiscord:AddDiscord({
 })
 
 secDiscord:AddDivider()
+
+local secSocial = Tabs.Elements:AddSection("Social", "solar/user-heart-bold")
+
+secSocial:AddParagraph({
+    Title = "AddSocial",
+    Content = "Shows a developer's social profile card. Avatar is fetched through Unavatar (or LinkPreview) and cached via the MediaManager. Click the display name or username to copy it.",
+})
+
+secSocial:AddSocial({
+    Username = "StyearX",
+    DisplayName = "StyearX",
+    Platform = "GitHub",
+    ProfileUrl = "https://github.com/StyearX",
+})
+
+secSocial:AddSocial({
+    ProfileUrl = "https://www.tiktok.com/@styearx",
+})
+
+secSocial:AddDivider()
 
 local secCollapsible = Tabs.Elements:AddSection("Collapsible Section", "lucide/chevrons-down-up")
 
@@ -1420,11 +1446,11 @@ local sizeBackMulti = 0.3
 local backgroundImage = Instance.new("ImageLabel")
 backgroundImage.Name = "RotatingBackground"
 backgroundImage.Parent = mainBtn
-backgroundImage.Size = UDim2.new(1.5 + sizeBackMulti, 0, 1.5 + sizeBackMulti, 0)
+backgroundImage.Size = UDim2.new(2.3 + sizeBackMulti, 0, 2.3 + sizeBackMulti, 0)
 backgroundImage.Position = UDim2.new(0.5, 0, 0.5, 0)
 backgroundImage.AnchorPoint = Vector2.new(0.5, 0.5)
 backgroundImage.BackgroundTransparency = 1
-backgroundImage.Image = "rbxassetid://92062295706713"
+backgroundImage.Image = "rbxassetid://109694296016043"
 backgroundImage.SizeConstraint = Enum.SizeConstraint.RelativeXX
 
 local frontImage = Instance.new("ImageLabel")
@@ -1434,7 +1460,7 @@ frontImage.Size = UDim2.fromOffset(55, 55)
 frontImage.Position = UDim2.new(0.5, 0, 0.5, 0)
 frontImage.AnchorPoint = Vector2.new(0.5, 0.5)
 frontImage.BackgroundTransparency = 1
-frontImage.Image = "rbxassetid://126113649238951"
+frontImage.Image = "rbxassetid://84435108807782"
 frontImage.ZIndex = 1
 Instance.new("UICorner", frontImage).CornerRadius = UDim.new(0.2, 0)
 
