@@ -31,6 +31,7 @@ Created with `Fluent:CreateWindow({...})`.
 | `UserInfoColor` | Color3 | Accent color of the user info card |
 | `Tags` | string | Create tags in the title baryg you can fill in as you like |
 | `Version` | string | Create Ui which is similar to tags function to show your Script hub version |
+| `Animated` | boolean | functions to disable or enable `animated window` from create window and does not completely depend on the Interface manager |
 ```lua
 --- createWindow Example
 isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled and not UserInputService.KeyboardEnabled
