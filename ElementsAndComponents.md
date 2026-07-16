@@ -1,5 +1,6 @@
 # FluentPro 
 
+---
 ## Change Logs
 
 ### v1.5.5
@@ -18,6 +19,7 @@
 
 **UI/UX Improvements:**
 - Add resize icons to window buttons
+---
 
 
 Documentation of every UI element and components available in FluentPro, including the special properties each one supports.
