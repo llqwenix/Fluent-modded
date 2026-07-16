@@ -3,7 +3,12 @@
 Documentation of every UI element and components available in FluentPro, including the special properties each one supports.
 
 ---
-
+## Load FluentPro 
+You can load fluentPro in all executors/injectors that support things like Getcustomasset, Http Service, Write File, other 
+```lua
+local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-modded/releases/download/1.5.5/FluentPro"))()
+```
+---
 ## Window
 
 Created with `Fluent:CreateWindow({...})`.
