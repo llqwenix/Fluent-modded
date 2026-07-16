@@ -25,6 +25,35 @@ Created with `Fluent:CreateWindow({...})`.
 | `UserInfoSubtitle` | string | Subtitle line of the user info card |
 | `UserInfoColor` | Color3 | Accent color of the user info card |
 
+```lua
+--- createWindow Example
+isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled and not UserInputService.KeyboardEnabled
+-- ignore this
+
+-- Create Window 
+Window = Fluent:CreateWindow({
+    Title = "GoonWares",
+    SubTitle = "Made by: StyearX",
+    TabWidth = isMobile and 130 or 150,
+    Tags = {
+        { Text = " Testing Ui ", Color = Color3.fromRGB(211, 15, 40) },
+        { Text = "UI base", Color = Color3.fromRGB(180, 10, 20) },
+    },
+    Version = "Version 1.5",
+    Acrylic = true,
+    Size = isMobile and UDim2.fromOffset(480, 490) or UDim2.fromOffset(580, 560),
+    Theme = "Blood Red",
+    Search = true,
+    SearchInHeader = true,
+    Icons = "rbxassetid://139095000385640",
+    TitleIcon = "rbxassetid://139379979502671",
+    UserInfoTop = true,
+    UserInfoTitle   = "Le Goon",
+    UserInfoSubtitle = LocalPlayer.DisplayName,
+    MinimizeKey = Enum.KeyCode.RightControl,
+})
+```
+
 Error handling can be set globally:
 
 ```lua
