@@ -127,7 +127,7 @@ A theme with `ShineEnabled = true` but no `Shine` table will not animate at all,
 ## Icon Packs
 
 All icon packs are loaded on demand. Use the `prefix/icon-name` format anywhere an `Icon` property is accepted.
-Icon Gallery, where you can check all icons. [Download Icon Gallery](https://github.com/llqwenix/Fluent-modded/blob/main/FluentModded_IconsGallery.rbxl)
+Icon Gallery, where you can check all icons. [Download Icon Gallery](https://github.com/llqwenix/Fluent-modded/raw/refs/heads/main/FluentModded_IconsGallery.rbxl)
 
 | Pack | Prefix | Repository |
 |---|---|---|
