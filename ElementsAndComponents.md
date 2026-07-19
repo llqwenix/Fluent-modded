@@ -21,6 +21,11 @@
 - Add resize icons to window buttons
 
 ---
+## v1.5.5 fix
+- Add Favoriteable Boolean to Disable favorites in tabs
+- fix stupid fallback to random images when Backgrounds is enabled
+
+- in ## v1.5.6 there will be some major improvements to the Search filter and Acrylic 
 
 ### v1.5.4
 
